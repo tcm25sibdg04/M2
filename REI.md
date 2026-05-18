@@ -41,3 +41,10 @@ paciente, o médico responsável, o serviço e a hora exata do atendimento para 
 questão. Deste modo, não é necessário navegar por registos grandes, esta funcionalidade
 permite uma gestão imediata da agenda, garantindo que o fluxo de trabalho na unidade de
 saúde seja mais rápida, ágil e focada nas necessidades do momento.
+
+
+
+
+
+
+<img width="1314" height="697" alt="DIAGRAMA" src="https://github.com/user-attachments/assets/09bdb300-b6ec-49ec-9861-454710f419ad" />

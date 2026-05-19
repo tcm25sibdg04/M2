@@ -1,0 +1,49 @@
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS Consulta;
+DROP TABLE IF EXISTS Servico;
+DROP TABLE IF EXISTS Paciente;
+DROP TABLE IF EXISTS Medico;
+DROP TABLE IF EXISTS Especialidade;
+SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE Especialidade (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Medico (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    cedula VARCHAR(20) UNIQUE NOT NULL,
+    id_especialidade INT,
+    FOREIGN KEY (id_especialidade) REFERENCES Especialidade(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE Paciente (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    nascimento DATE NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    cc VARCHAR(20) UNIQUE NOT NULL,
+    num_saude VARCHAR(20) UNIQUE NOT NULL,
+    seguro VARCHAR(50),
+    telefone_extra VARCHAR(20)
+);
+
+CREATE TABLE Servico (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL
+);
+
+CREATE TABLE Consulta (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    data_hora DATETIME NOT NULL,
+    estado VARCHAR(20) CHECK (estado IN ('Agendada', 'Realizada', 'Cancelada')),
+    id_paciente INT,
+    id_medico INT,
+    id_servico INT,
+    FOREIGN KEY (id_paciente) REFERENCES Paciente(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_medico) REFERENCES Medico(id) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (id_servico) REFERENCES Servico(id) ON DELETE SET NULL ON UPDATE CASCADE
+);

@@ -10,6 +10,7 @@ import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import PeopleIcon from "@mui/icons-material/People"; 
 import BadgeIcon from "@mui/icons-material/Badge"; 
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { Card, CardHeader, CardContent } from "@mui/material";
 
 const baseDataProvider = lb4Provider("http://localhost:3000");
 
@@ -28,6 +29,13 @@ const dataProvider = {
     }
   },
 };
+
+const Dashboard = () => (
+  <Card style={{ marginTop: 20 }}>
+    <CardHeader title="Bem-vindo ao Sistema de Administração da Clínica" />
+    <CardContent>Aqui pode gerir todas as especialidades, médicos, consultas e utentes.</CardContent>
+  </Card>
+);
 
 const EspecialidadesList = () => (
   <List><Datagrid rowClick="edit"><NumberField source="id" /><TextField source="nome" /></Datagrid></List>
@@ -155,7 +163,7 @@ const ConsultasCreate = () => (
 );
 
 export const App = () => (
-  <Admin dataProvider={dataProvider}>
+  <Admin dashboard={Dashboard} dataProvider={dataProvider}>
     <Resource name="especialidades" icon={LocalHospitalIcon} list={EspecialidadesList} edit={EspecialidadesEdit} create={EspecialidadesCreate} />
     <Resource name="servicos" icon={MedicalServicesIcon} list={ServicosList} edit={ServicosEdit} create={ServicosCreate} />
     <Resource name="pacientes" icon={PeopleIcon} list={PacientesList} edit={PacientesEdit} create={PacientesCreate} />

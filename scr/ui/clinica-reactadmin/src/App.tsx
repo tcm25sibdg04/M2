@@ -5,6 +5,11 @@ import {
 } from "react-admin";
 // @ts-ignore
 import lb4Provider from "ra-data-loopback4";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital"; 
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices"; 
+import PeopleIcon from "@mui/icons-material/People"; 
+import BadgeIcon from "@mui/icons-material/Badge"; 
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 const baseDataProvider = lb4Provider("http://localhost:3000");
 
@@ -151,10 +156,10 @@ const ConsultasCreate = () => (
 
 export const App = () => (
   <Admin dataProvider={dataProvider}>
-    <Resource name="especialidades" list={EspecialidadesList} edit={EspecialidadesEdit} create={EspecialidadesCreate} />
-    <Resource name="servicos" list={ServicosList} edit={ServicosEdit} create={ServicosCreate} />
-    <Resource name="pacientes" list={PacientesList} edit={PacientesEdit} create={PacientesCreate} />
-    <Resource name="medicos" list={MedicosList} edit={MedicosEdit} create={MedicosCreate} />
-    <Resource name="consultas" list={ConsultasList} edit={ConsultasEdit} create={ConsultasCreate} />
+    <Resource name="especialidades" icon={LocalHospitalIcon} list={EspecialidadesList} edit={EspecialidadesEdit} create={EspecialidadesCreate} />
+    <Resource name="servicos" icon={MedicalServicesIcon} list={ServicosList} edit={ServicosEdit} create={ServicosCreate} />
+    <Resource name="pacientes" icon={PeopleIcon} list={PacientesList} edit={PacientesEdit} create={PacientesCreate} />
+    <Resource name="medicos" icon={BadgeIcon} list={MedicosList} edit={MedicosEdit} create={MedicosCreate} />
+    <Resource name="consultas" icon={CalendarMonthIcon} list={ConsultasList} edit={ConsultasEdit} create={ConsultasCreate} />
   </Admin>
 );

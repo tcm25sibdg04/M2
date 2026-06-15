@@ -1,7 +1,7 @@
 import { 
   Admin, Resource, 
   List, Datagrid, TextField, NumberField,
-  Edit, Create, SimpleForm, TextInput, NumberInput, EditButton
+  Edit, Create, SimpleForm, TextInput, NumberInput, EditButton, Filter
 } from "react-admin";
 // @ts-ignore
 import lb4Provider from "ra-data-loopback4";
@@ -61,8 +61,14 @@ const Dashboard = () => (
   </Card>
 );
 
+const EspecialidadesFilter = (props: any) => (
+  <Filter {...props}>
+    <TextInput label="Pesquisar" source="q" alwaysOn />
+  </Filter>
+);
+
 const EspecialidadesList = (props: any) => (
-  <List {...props}>
+  <List filters={<EspecialidadesFilter />} {...props}>
     <Datagrid>
       <NumberField source="id" />
       <TextField source="nome" />
@@ -86,8 +92,14 @@ const EspecialidadesCreate = (props: any) => (
   </Create>
 );
 
+const ServicosFilter = (props: any) => (
+  <Filter {...props}>
+    <TextInput label="Pesquisar" source="q" alwaysOn />
+  </Filter>
+);
+
 const ServicosList = (props: any) => (
-  <List {...props}>
+  <List filters={<ServicosFilter />} {...props}>
     <Datagrid>
       <NumberField source="id" />
       <TextField source="nome" />
@@ -116,8 +128,14 @@ const ServicosCreate = (props: any) => (
   </Create>
 );
 
+const PacientesFilter = (props: any) => (
+  <Filter {...props}>
+    <TextInput label="Pesquisar" source="q" alwaysOn />
+  </Filter>
+);
+
 const PacientesList = (props: any) => (
-  <List {...props}>
+  <List filters={<PacientesFilter />} {...props}>
     <Datagrid>
       <NumberField source="id" />
       <TextField source="nome" />
@@ -158,8 +176,14 @@ const PacientesCreate = (props: any) => (
   </Create>
 );
 
+const MedicosFilter = (props: any) => (
+  <Filter {...props}>
+    <TextInput label="Pesquisar" source="q" alwaysOn />
+  </Filter>
+);
+
 const MedicosList = (props: any) => (
-  <List {...props}>
+  <List filters={<MedicosFilter />} {...props}>
     <Datagrid>
       <NumberField source="id" />
       <TextField source="nome" />
@@ -191,8 +215,14 @@ const MedicosCreate = (props: any) => (
   </Create>
 );
 
+const ConsultasFilter = (props: any) => (
+  <Filter {...props}>
+    <TextInput label="Pesquisar" source="q" alwaysOn />
+  </Filter>
+);
+
 const ConsultasList = (props: any) => (
-  <List {...props}>
+  <List filters={<ConsultasFilter />} {...props}>
     <Datagrid>
       <NumberField source="id" />
       <TextField source="data_hora" label="Data/Hora" />

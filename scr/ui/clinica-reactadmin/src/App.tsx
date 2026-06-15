@@ -1,7 +1,7 @@
 import { 
   Admin, Resource, 
   List, Datagrid, TextField, NumberField,
-  Edit, Create, SimpleForm, TextInput, NumberInput
+  Edit, Create, SimpleForm, TextInput, NumberInput, EditButton
 } from "react-admin";
 // @ts-ignore
 import lb4Provider from "ra-data-loopback4";
@@ -28,6 +28,30 @@ const dataProvider = {
       };
     }
   },
+  getOne: async (resource: any, params: any) => {
+    try {
+      return await baseDataProvider.getOne(resource, params);
+    } catch (error) {
+      const response = await fetch(`http://localhost:3000/${resource}/${params.id}`);
+      const data = await response.json();
+      return {
+        data: { ...data, id: data.id || data._id },
+      };
+    }
+  },
+  update: async (resource: any, params: any) => {
+    try {
+      return await baseDataProvider.update(resource, params);
+    } catch (error) {
+      const response = await fetch(`http://localhost:3000/${resource}/${params.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(params.data),
+      });
+      const data = await response.json();
+      return { data: { ...data, id: data.id || data._id } };
+    }
+  },
 };
 
 const Dashboard = () => (
@@ -37,29 +61,64 @@ const Dashboard = () => (
   </Card>
 );
 
-const EspecialidadesList = () => (
-  <List><Datagrid rowClick="edit"><NumberField source="id" /><TextField source="nome" /></Datagrid></List>
+const EspecialidadesList = (props: any) => (
+  <List {...props}>
+    <Datagrid>
+      <NumberField source="id" />
+      <TextField source="nome" />
+      <EditButton />
+    </Datagrid>
+  </List>
 );
-const EspecialidadesEdit = () => (
-  <Edit><SimpleForm><NumberInput source="id" disabled /><TextInput source="nome" /></SimpleForm></Edit>
+const EspecialidadesEdit = (props: any) => (
+  <Edit {...props}>
+    <SimpleForm>
+      <NumberInput source="id" disabled />
+      <TextInput source="nome" />
+    </SimpleForm>
+  </Edit>
 );
-const EspecialidadesCreate = () => (
-  <Create><SimpleForm><TextInput source="nome" /></SimpleForm></Create>
+const EspecialidadesCreate = (props: any) => (
+  <Create {...props}>
+    <SimpleForm>
+      <TextInput source="nome" />
+    </SimpleForm>
+  </Create>
 );
 
-const ServicosList = () => (
-  <List><Datagrid rowClick="edit"><NumberField source="id" /><TextField source="nome" /><NumberField source="preco" /></Datagrid></List>
-);
-const ServicosEdit = () => (
-  <Edit><SimpleForm><NumberInput source="id" disabled /><TextInput source="nome" /><NumberInput source="preco" /></SimpleForm></Edit>
-);
-const ServicosCreate = () => (
-  <Create><SimpleForm><TextInput source="nome" /><NumberInput source="preco" /></SimpleForm></Create>
+const ServicosList = (props: any) => (
+  <List {...props}>
+    <Datagrid>
+      <NumberField source="id" />
+      <TextField source="nome" />
+      <NumberField source="preco" />
+      <EditButton />
+    </Datagrid>
+  </List>
 );
 
-const PacientesList = () => (
-  <List>
-    <Datagrid rowClick="edit">
+const ServicosEdit = (props: any) => (
+  <Edit {...props}>
+    <SimpleForm>
+      <NumberInput source="id" disabled />
+      <TextInput source="nome" />
+      <NumberInput source="preco" />
+    </SimpleForm>
+  </Edit>
+);
+
+const ServicosCreate = (props: any) => (
+  <Create {...props}>
+    <SimpleForm>
+      <TextInput source="nome" />
+      <NumberInput source="preco" />
+    </SimpleForm>
+  </Create>
+);
+
+const PacientesList = (props: any) => (
+  <List {...props}>
+    <Datagrid>
       <NumberField source="id" />
       <TextField source="nome" />
       <TextField source="nascimento" />
@@ -67,11 +126,13 @@ const PacientesList = () => (
       <TextField source="cc" />
       <TextField source="num_saude" />
       <TextField source="seguro" />
+      <EditButton />
     </Datagrid>
   </List>
 );
-const PacientesEdit = () => (
-  <Edit>
+
+const PacientesEdit = (props: any) => (
+  <Edit {...props}>
     <SimpleForm>
       <NumberInput source="id" disabled />
       <TextInput source="nome" />
@@ -83,8 +144,9 @@ const PacientesEdit = () => (
     </SimpleForm>
   </Edit>
 );
-const PacientesCreate = () => (
-  <Create>
+
+const PacientesCreate = (props: any) => (
+  <Create {...props}>
     <SimpleForm>
       <TextInput source="nome" />
       <TextInput source="nascimento" />
@@ -96,18 +158,20 @@ const PacientesCreate = () => (
   </Create>
 );
 
-const MedicosList = () => (
-  <List>
-    <Datagrid rowClick="edit">
+const MedicosList = (props: any) => (
+  <List {...props}>
+    <Datagrid>
       <NumberField source="id" />
       <TextField source="nome" />
       <TextField source="cedula" />
       <TextField source="id_especialidade" label="Id Especialidade" />
+      <EditButton />
     </Datagrid>
   </List>
 );
-const MedicosEdit = () => (
-  <Edit>
+
+const MedicosEdit = (props: any) => (
+  <Edit {...props}>
     <SimpleForm>
       <NumberInput source="id" disabled />
       <TextInput source="nome" />
@@ -116,8 +180,9 @@ const MedicosEdit = () => (
     </SimpleForm>
   </Edit>
 );
-const MedicosCreate = () => (
-  <Create>
+
+const MedicosCreate = (props: any) => (
+  <Create {...props}>
     <SimpleForm>
       <TextInput source="nome" />
       <TextInput source="cedula" />
@@ -126,20 +191,22 @@ const MedicosCreate = () => (
   </Create>
 );
 
-const ConsultasList = () => (
-  <List>
-    <Datagrid rowClick="edit">
+const ConsultasList = (props: any) => (
+  <List {...props}>
+    <Datagrid>
       <NumberField source="id" />
       <TextField source="data_hora" label="Data/Hora" />
       <TextField source="estado" />
       <TextField source="id_paciente" label="Id Paciente" />
       <TextField source="id_medico" label="Id Médico" />
       <TextField source="id_servico" label="Id Serviço" />
+      <EditButton />
     </Datagrid>
   </List>
 );
-const ConsultasEdit = () => (
-  <Edit>
+
+const ConsultasEdit = (props: any) => (
+  <Edit {...props}>
     <SimpleForm>
       <NumberInput source="id" disabled />
       <TextInput source="data_hora" />
@@ -150,8 +217,9 @@ const ConsultasEdit = () => (
     </SimpleForm>
   </Edit>
 );
-const ConsultasCreate = () => (
-  <Create>
+
+const ConsultasCreate = (props: any) => (
+  <Create {...props}>
     <SimpleForm>
       <TextInput source="data_hora" />
       <TextInput source="estado" />
